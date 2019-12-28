@@ -1,0 +1,185 @@
+1.SAMPLE JAVA PRG:
+package deloitte;
+
+public class HelloWorld {
+	
+	
+	public static void main(String args[])
+	{
+       
+		System.out.println("ADDITION = "+add(2,3));
+		System.out.println("SUBTRACTION ="+sub(5,2));
+		System.out.println("MULTIPLICATION ="+mul(2,3));
+	}
+	
+	
+	public static int add(int x, int y)
+	 {
+		 return x+y;
+	 }
+	 
+	public static int sub(int x, int y)
+	 {
+		 return x-y;
+	 }
+	
+	public static int mul(int x, int y)
+	 {
+		 return x*y;
+	 }
+}
+
+
+2.EMPLOYEE
+package deloitte;
+
+public class employee {
+	private int empId;
+	private String empName;
+	private double salary;
+	private String deptId;
+
+	// default constructor
+	employee() {
+
+	}
+
+	// parameterized constructor in java
+	employee(int empId, String empName, double salary, String deptId) {
+		this.empId = empId;
+		this.empName = empName;
+		this.salary = salary;
+		this.deptId = deptId;
+	}
+
+	public int getEmpId() {
+		return empId;
+	}
+
+	public void setEmpId(int empId) {
+		this.empId = empId;
+	}
+
+	public String getEmpName() {
+		return empName;
+	}
+
+	public void setEmpName(String empName) {
+		String pattern = "^[a-zA-Z]+$";
+		if (empName.matches(pattern))
+			this.empName = empName;
+		else
+			System.out.println("Please enter name in alphabets");
+	}
+
+	public static boolean nameValidation(String name) {
+		String pattern = "^[a-zA-Z]+$";
+		if (name.matches(pattern))
+			// this.empName = empName;
+			return true;
+		else {
+			System.out.println("Please enter name in alphabets");
+			return false;
+		}
+
+	}
+
+	public double getSalary() {
+		return salary;
+	}
+
+	public void setSalary(double salary) {
+		this.salary = salary;
+	}
+
+	public String getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(String deptId) {
+		this.deptId = deptId;
+	}
+
+	public void deptChange(String deptName) {
+		System.out.println("inside dept change method");
+	}
+
+	public double salaryIncrement(double amount) {
+		System.out.println("inside increment method");
+		return 10.10;
+	}
+
+}
+
+
+2.1:employee demo
+package deloitte;
+
+import java.util.Scanner;
+
+public class Employeedemo {
+
+	public static void main(String args[]) {
+		
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Please enter name");
+		String name=sc.next();
+		
+		System.out.println("Please enter salary");
+		String salary=sc.next();
+		
+		boolean nameFlag=validation.nameValidation(name);
+		boolean salaryFlag=validation.salaryValidation(salary);
+
+		
+		if(nameFlag && salaryFlag)
+		{
+		employee emp1 = new employee();// calling default constructor
+		emp1.setDeptId("Associate Analyst");
+		emp1.setEmpId(101);
+		emp1.setEmpName("abc");
+		emp1.setSalary(25000);
+		System.out.println(emp1.getSalary());
+		}
+
+		//employee emp2 = new employee(102, "abc", 25000, "CS");// calling parameterized constructor
+		//System.out.println(emp2.getEmpId());
+		
+
+		
+	}
+
+}
+
+3.VALIDATION
+package deloitte;
+
+public class validation {
+	public static boolean nameValidation(String name) {
+		String pattern = "^[a-zA-Z]+$";
+		if (name.matches(pattern))
+			// this.empName = empName;
+			return true;
+		else {
+			System.out.println("Please enter name in alphabets");
+			return false;
+		}
+
+	}
+
+	public static boolean salaryValidation(String salary) {
+		String pattern = "^[0-9]+$";
+		if (salary.matches(pattern))
+			// this.empName = empName;
+			return true;
+		else {
+			System.out.println("Please enter salary in digits");
+			return false;
+		}
+
+	}
+
+}
+
+
+
