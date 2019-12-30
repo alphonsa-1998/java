@@ -351,12 +351,48 @@ while(true) {
 
 			}
 			break;
+		
+		case "2":
+				System.out.println("enter the class id to search");
+				int cls = sc.nextInt();
+				boolean flag = false;
+				for (Classroom c : room) {
+					if (c.getClassroomId() == cls) {
+						System.out.println(c);
+						flag = true;
+					}
+				}
+				if (!flag) {
+					System.out.println("no rooms found");
+				}
+				break;
+		
 		case "3":
 			for (Classroom c : room) {
 				System.out.println(c);
 			}
 			
 			break;
+			
+		case "4":
+				System.out.println("enter the minimum no:of systems required");
+				int n = sc.nextInt();
+				boolean f = false;
+				for (Classroom c : room) {
+					if (c.getNumberOfsystems()>= n) {
+					//	System.out.println(c);
+						f = true;
+						c.setFacultyAvailability(true);
+						System.out.println(c);
+						System.out.println("AVAILABLE");
+					}
+				}
+				if (!f) {
+					System.out.println("NOT AVAILABLE");
+				}
+				break;	
+			
+			
 		case "5":
 			System.exit(0);
 
