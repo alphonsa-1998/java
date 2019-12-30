@@ -194,6 +194,14 @@ public class Classroom {
 	private String facultyName;
 	private  boolean occupied;
 	private  boolean facultyAvailability;
+	@Override
+	public String toString() {
+		return "Classroom [classroomName=" + classroomName + ", numberOfsystems=" + numberOfsystems + ", projector="
+				+ projector + ", ac=" + ac + ", facultyName=" + facultyName + ", occupied=" + occupied
+				+ ", facultyAvailability=" + facultyAvailability + ", classroomId=" + classroomId + "]";
+	}
+
+
 	private  int classroomId;
 	
 	
@@ -285,7 +293,7 @@ public class Classroom {
 
 }
 
-3.1
+4.1
 package deloitte;
 
 import java.util.*;
@@ -347,7 +355,7 @@ while(true) {
 			for (Classroom c : room) {
 				System.out.println(c);
 			}
-		
+			
 			break;
 		case "5":
 			System.exit(0);
@@ -358,6 +366,4 @@ while(true) {
 	}
 
 }
-
-
 
