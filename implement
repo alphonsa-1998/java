@@ -1,0 +1,195 @@
+CLASSROOM DEMO
+
+package deloitte;
+
+import java.util.*;
+
+public class ClassroomDemo {
+
+	public static void main(String args[]) {
+
+		Scanner sc = new Scanner(System.in);
+		Classroom[] room = null;
+		String noOfRooms = null;
+		int counter=0;
+		while (true) {
+			System.out.println(
+					"1.Add new room" + "2.Search room" + "3.Display all room" + "4.Allocate the room" + "5.exit");
+
+			String option = sc.next();
+			RoomImpl mainClassObj = new RoomImpl();
+
+			switch (option) {
+
+			case "1":
+				System.out.println("please enter total no:of rooms");
+				noOfRooms = sc.next();
+				room = new Classroom[Integer.parseInt(noOfRooms)];
+
+				for (int i = 0; i < Integer.parseInt(noOfRooms); i++) {
+					System.out.println("enter id");
+					String id = sc.next();
+					System.out.println("enter classroom name");
+					String name = sc.next();
+					System.out.println("enter no:of systems");
+					String systems = sc.next();
+					System.out.println("is projector needed");
+					String projector = sc.next();
+					System.out.println("is AC needed");
+					String ac = sc.next();
+					/*
+					 * System.out.println("enter faculty name"); String faculty = sc.next();
+					 */
+
+					/*Classroom c = new Classroom();
+					c.setClassroomId(Integer.parseInt(id));
+					c.setClassroomName(name);
+					c.setNumberOfsystems(Integer.parseInt(systems));
+					c.setProjector(true);
+					 c.setAc(true);*/
+					// c.setFacultyName(faculty);
+					// c.setOccupied(false);
+					// c.setFacultyAvailability(true);
+
+					room[i] = mainClassObj.addRoom(id, name, systems, projector);
+
+				}
+				break;
+
+			case "2":
+				System.out.println("enter the class id to search");
+				String cls = sc.next();
+
+				Classroom[] rooms = null;
+				mainClassObj.searchRoom(Integer.parseInt(cls), rooms);
+				break;
+			case "3":
+				for (Classroom c : room) {
+					System.out.println(c);
+				}
+				int d = Classroom.getCounter();
+				System.out.println("No:of objects:" + d);
+
+				break;
+
+			case "4":
+				System.out.println("enter the minimum no:of systems required");
+				int n = sc.nextInt();
+
+				Classroom[] availableRooms = null;
+				mainClassObj.allocatRoom(n, availableRooms);
+
+				for (Classroom c : availableRooms) {
+					System.out.println("enter the name of faculty required");
+					String nameFac = sc.next();
+					c.setFacultyName(nameFac);
+					
+					c.setOccupied(false);
+					
+				}
+			}
+		counter++;
+			if(counter>=Integer.parseInt(noOfRooms)) {
+				break;
+			}
+			
+			
+			break;
+
+			
+
+			
+			  case "5": System.exit(0);
+			 
+
+			// System.out.println(c);
+		}
+	}
+}
+
+
+ROOM
+
+package deloitte;
+
+public interface Room {
+	
+	public Classroom addRoom(String ClassroomId, String ClassroomName, String NumberOfsystems,String Projector);
+	public Classroom searchRoom(int roomId, Classroom[] rooms);
+	public Classroom allocatRoom(int noOfSystems,Classroom[] rooms);
+	public Classroom displayRoom();
+}
+
+
+RoomImpl
+package deloitte;
+
+import java.util.Scanner;
+
+public class RoomImpl implements Room {
+
+	int classroomId;
+	Scanner sc = new Scanner(System.in);
+	Classroom[] room = null;
+	@Override
+	public Classroom addRoom(String ClassroomId, String ClassroomName, String NumberOfsystems,String Projector) {
+		// TODO Auto-generated method stub
+		Classroom cls = new Classroom();
+		String id = ClassroomId;
+		cls.setClassroomId(Integer.parseInt(id));
+		String name = ClassroomName;
+		cls.setClassroomName(name);
+		String systems = NumberOfsystems;
+		cls.setNumberOfsystems(Integer.parseInt(systems));
+		cls.setProjector(true);
+		return cls;
+		
+		
+	}
+
+	@Override
+	public Classroom searchRoom(int roomId, Classroom[] rooms) {
+		
+				for (Classroom c : room) {
+			if (c.getClassroomId() == roomId) {
+				//System.out.println(c);
+				return c;
+			}
+		}
+		
+		
+		
+		
+		return null;
+		// TODO Auto-generated method stub
+		
+	
+	}
+
+	@Override
+	public Classroom allocatRoom(int noOfSystems,Classroom[] rooms) {
+		// TODO Auto-generated method stub
+		Classroom[] availableRooms=new Classroom[10];
+		int i=0;
+		
+		for(Classroom c:rooms)
+		{
+			if(c.getNumberOfsystems()>=noOfSystems && c.isOccupied())
+			{
+				availableRooms[i]=c;
+				i++;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public Classroom displayRoom() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+
+
+}
+
