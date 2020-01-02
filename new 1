@@ -445,3 +445,108 @@ public class CommonUtilities {
 	}
 
 }
+
+6.INTERFACE ROOM
+package deloitte;
+
+import java.util.*;
+
+public interface Room {
+
+	public Classroom addRoom(String ClassroomId, String ClassroomName, String NumberOfsystems, String Projector);
+
+	public Classroom searchRoom(int roomId, ArrayList<Classroom> rooms);
+
+	public ArrayList<Classroom> allocatRoom(int noOfSystems, ArrayList<Classroom> rooms);
+
+	public Classroom displayRoom();
+
+	Classroom allocatRoom(int noOfSystems, Classroom[] rooms);
+	
+	public boolean validateUser(String uname,String pswd);
+}
+
+
+7.ROOM IMPLEMENTATION
+package deloitte;
+
+import java.util.*;
+
+public class RoomImpl implements Room {
+
+	int classroomId;
+	Scanner sc = new Scanner(System.in);
+	Classroom[] room = null;
+
+	@Override
+	public Classroom addRoom(String ClassroomId, String ClassroomName, String NumberOfsystems, String Projector) {
+		// TODO Auto-generated method stub
+		Classroom cls = new Classroom();
+		String id = ClassroomId;
+		cls.setClassroomId(Integer.parseInt(id));
+		String name = ClassroomName;
+		cls.setClassroomName(name);
+		String systems = NumberOfsystems;
+		cls.setNumberOfsystems(Integer.parseInt(systems));
+		cls.setProjector(true);
+		return cls;
+
+	}
+
+	@Override
+	public Classroom searchRoom(int roomId, ArrayList<Classroom> list) {
+
+		for (Classroom c : list) {
+			if (c.getClassroomId() == roomId) {
+				// System.out.println(c);
+				return c;
+			}
+		}
+
+		return null;
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Classroom allocatRoom(int noOfSystems, Classroom[] rooms) {
+		// TODO Auto-generated method stub
+		Classroom[] availableRooms = new Classroom[10];
+		int i = 0;
+
+		for (Classroom c : rooms) {
+			if (c.getNumberOfsystems() >= noOfSystems && c.isOccupied()) {
+				availableRooms[i] = c;
+				i++;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public Classroom displayRoom() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Classroom> allocatRoom(int noOfSystems, ArrayList<Classroom> rooms) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean validateUser(String uname,String pswd) {
+		
+		if(uname.equals("admin")&&pswd.equals("admin"))
+			return true;
+		
+		else
+		return false;
+	}
+	
+	
+	
+	
+}
+
