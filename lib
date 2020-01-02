@@ -1,0 +1,165 @@
+1.LIBRARY
+
+package librarysystem;
+
+public class Library {
+
+	private int bookId;
+	private String bookName;
+	private double bookPrice;
+	private String bookAuthor;
+	private static int counter=1001;
+	
+	Library()
+	{
+		counter++;
+	}
+	
+	public static int getCounter() {
+		return counter;
+	}
+
+	public static void setCounter(int counter) {
+		Library.counter = counter;
+	}
+
+	public int getBookId() {
+		return bookId;
+	}
+	public void setBookId(int bookId) {
+		this.bookId = bookId;
+	}
+	public String getBookName() {
+		return bookName;
+	}
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
+	}
+	public double getBookPrice() {
+		return bookPrice;
+	}
+	public void setBookPrice(double bookPrice) {
+		this.bookPrice = bookPrice;
+	}
+	public String getBookAuthor() {
+		return bookAuthor;
+	}
+	public void setBookAuthor(String bookAuthor) {
+		this.bookAuthor = bookAuthor;
+	}
+}
+
+
+2.BOOKS
+package librarysystem;
+
+public interface Books {
+	
+	public Library addBooks(int id,String name,double price,String author);
+	public Library displayBooks(int id,String name,double price,String author);
+
+}
+
+
+3.BOOK DETAILS
+package librarysystem;
+
+import java.util.*;
+
+public class BookDetails {
+
+	public static void main(String arg[]) {
+		Scanner sc = new Scanner(System.in);
+		String option;
+		Library book = new Library();
+		BookImpl bookObj = new BookImpl();
+		int count = 1001;
+
+		while (true) {
+			System.out.println("1. ADD BOOK " + " 2.DISPLAY BOOK" + " 3.EXIT");
+			option = sc.next();
+			System.out.println("Enter no:of books");
+			int num = sc.nextInt();
+			switch (option) {
+			case "1":
+				
+			//	count++;
+				 for (int i = 0; i < num; i++) {
+				System.out.println("Enter book name");
+				String bookName = sc.next();
+
+				System.out.println("Enter book price");
+				double bookPrice = sc.nextDouble();
+
+				System.out.println("Enter book author");
+				String bookAuthor = sc.next();
+				 
+			
+				book = bookObj.addBooks(count, bookName, bookPrice, bookAuthor);}
+				break;
+
+			case "2": 
+
+			}
+
+		}
+
+	}
+
+}
+
+4.BOOK IMPL
+package librarysystem;
+
+public class BookImpl implements Books{
+	
+	int id;
+	String name;
+	double price;
+	String author;
+	//BookImpl b=new BookImpl();
+	
+	public Library addBooks(int id,String name,double price,String author)
+	{
+		Library book=new Library();
+		//int bookId=id;
+		//book.set
+		String bookName=name;
+		book.setBookName(bookName);
+		double bookPrice=price;
+		book.setBookPrice(bookPrice);
+		String bookAuthor=author;
+		book.setBookAuthor(bookAuthor);
+		
+		return book;
+		
+	}
+	
+	public Library displayBooks(int id,String name,double price,String author)
+	{
+		
+	
+		
+		
+		return null;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	@Override
+	public String toString() {
+		return "BookImpl [id=" + id + ", name=" + name + ", price=" + price + ", author=" + author + "]";
+	}
+	
+	
+}
+
