@@ -1,16 +1,22 @@
-1.LIBRARY
+1.BOOKS.JAVA
 
-package librarysystem;
+package books;
 
-public class Library {
+public class Books {
 
 	private int bookId;
 	private String bookName;
 	private double bookPrice;
 	private String bookAuthor;
+	
+	@Override
+	public String toString() {
+		return "Books [bookId=" + bookId + ", bookName=" + bookName + ", bookPrice=" + bookPrice + ", bookAuthor="
+				+ bookAuthor + "]";
+	}
 	private static int counter=1001;
 	
-	Library()
+	Books()
 	{
 		counter++;
 	}
@@ -20,7 +26,7 @@ public class Library {
 	}
 
 	public static void setCounter(int counter) {
-		Library.counter = counter;
+		Books.counter = counter;
 	}
 
 	public int getBookId() {
@@ -50,55 +56,63 @@ public class Library {
 }
 
 
-2.BOOKS
-package librarysystem;
+2.BOOKS INTERFACE.JAVA
 
-public interface Books {
+package books;
+
+public interface BooksInterface {
 	
-	public Library addBooks(int id,String name,double price,String author);
-	public Library displayBooks(int id,String name,double price,String author);
+	public Books addBooks(String bookName,String bookPrice,String authorName);
+	//public Books displayBooks(int id,String name,double price,String author);
 
 }
 
+3.LIBRARY DEMO
 
-3.BOOK DETAILS
-package librarysystem;
+package books;
 
 import java.util.*;
 
-public class BookDetails {
+public class LibraryDemo {
 
 	public static void main(String arg[]) {
 		Scanner sc = new Scanner(System.in);
 		String option;
-		Library book = new Library();
-		BookImpl bookObj = new BookImpl();
-		int count = 1001;
-
+		//Books book = new Books();
+		BookImpl booksImpl = new BookImpl();
+		List<Books> booklist=new ArrayList<Books>();
+		
 		while (true) {
-			System.out.println("1. ADD BOOK " + " 2.DISPLAY BOOK" + " 3.EXIT");
+			System.out.println("1. ADD BOOK " + "\n 2.DISPLAY BOOK" + "\n 3.EXIT");
 			option = sc.next();
-			System.out.println("Enter no:of books");
-			int num = sc.nextInt();
+			//System.out.println("Enter no:of books");
+			//int num = sc.nextInt();
 			switch (option) {
 			case "1":
 				
-			//	count++;
-				 for (int i = 0; i < num; i++) {
+			
+				// for (int i = 0; i < num; i++) {
 				System.out.println("Enter book name");
 				String bookName = sc.next();
 
 				System.out.println("Enter book price");
-				double bookPrice = sc.nextDouble();
+				String bookPrice = sc.next();
 
 				System.out.println("Enter book author");
 				String bookAuthor = sc.next();
 				 
 			
-				book = bookObj.addBooks(count, bookName, bookPrice, bookAuthor);}
+			booklist.add(booksImpl.addBooks(bookName, bookPrice, bookAuthor));
+				
+			//}
 				break;
 
-			case "2": 
+			case "2": for(Books book:booklist)
+					System.out.println(book);
+			break;
+			
+			case "3":System.exit(0);
+			break;
 
 			}
 
@@ -108,34 +122,35 @@ public class BookDetails {
 
 }
 
-4.BOOK IMPL
-package librarysystem;
 
-public class BookImpl implements Books{
+4.BOOKS IMPL
+
+package books;
+
+public class BookImpl implements BooksInterface{
 	
-	int id;
-	String name;
-	double price;
-	String author;
+	
 	//BookImpl b=new BookImpl();
 	
-	public Library addBooks(int id,String name,double price,String author)
+	@Override
+	public Books addBooks(String bookName,String bookPrice,String authorName)
 	{
-		Library book=new Library();
+		Books book=new Books();
 		//int bookId=id;
 		//book.set
-		String bookName=name;
+		book.setBookId(Books.getCounter());
+		//String bookName=name;
 		book.setBookName(bookName);
-		double bookPrice=price;
-		book.setBookPrice(bookPrice);
-		String bookAuthor=author;
-		book.setBookAuthor(bookAuthor);
+		//String bookPrice=price;
+		book.setBookPrice(Double.parseDouble(bookPrice));
+		//String bookAuthor=author;
+		book.setBookAuthor(authorName);
 		
 		return book;
 		
 	}
 	
-	public Library displayBooks(int id,String name,double price,String author)
+	public Books displayBooks(int id,String name,double price,String author)
 	{
 		
 	
@@ -155,11 +170,6 @@ public class BookImpl implements Books{
 	
 	
 
-	@Override
-	public String toString() {
-		return "BookImpl [id=" + id + ", name=" + name + ", price=" + price + ", author=" + author + "]";
-	}
-	
+
 	
 }
-
