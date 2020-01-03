@@ -1,0 +1,301 @@
+user details
+
+package com.deloitte.limetary.model;
+
+public class UserDetails {
+
+	private String  userId;
+	private String name;
+	private String password;
+	private String email;
+	private int phone;
+	
+	
+
+	public String getUserId() {
+		return userId;
+	}
+
+
+
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+
+
+
+	public String getName() {
+		return name;
+	}
+
+
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+
+
+	public int getPhone() {
+		return phone;
+	}
+
+
+
+
+	public void setPhone(int phone) {
+		this.phone = phone;
+	}
+
+
+
+
+	@Override
+	public String toString() {
+		return "UserDetails [userId=" + userId + ", name=" + name + ", password=" + password + ", email=" + email
+				+ ", phone=" + phone + "]";
+	}
+	
+	
+}
+
+
+
+limetray demo
+package com.deloitte.limetray.main;
+
+import java.util.*;
+
+import com.deloitte.limetary.model.UserDetails;
+import com.deloitte.limetray.services.UserImpl;
+
+public class LimetrayDemo {
+
+	public static void main(String arg[]) {
+		Scanner sc = new Scanner(System.in);
+		String option;
+		
+		UserImpl userImpl = new UserImpl();
+		List<UserDetails> userlist = new ArrayList<UserDetails>();
+
+		while (true) {
+			System.out.println("1. ADD USER" + "\n 2.DISPLAY USER" + "\n 3.EXIT");
+			option = sc.next();
+
+			switch (option) {
+			case "1":			
+
+				System.out.println("Enter username");
+				String userName = sc.next();
+				
+				System.out.println("Enter user id");
+				String userId = sc.next();
+
+				System.out.println("Enter password");
+				String password = sc.next();
+
+				System.out.println("Enter phone no:");
+				int phone = sc.nextInt();
+
+				System.out.println("Enter email:");
+				String email = sc.next();
+
+				userImpl.addUser(userName, userId, password, phone, email);
+			
+				
+				//userlist.add(userImpl.addUser(userName, userId, password, phone, email));
+				break;
+
+			case "2":
+				userlist = userImpl.displayUser();
+				for (UserDetails user : userlist)
+					System.out.println(user);
+
+				break;
+
+			case "3":
+				System.exit(0);
+				break;
+
+			}
+
+		}
+
+	}
+
+}
+
+
+user interfce
+
+package com.deloitte.limetray.services;
+
+import java.util.ArrayList;
+
+import com.deloitte.limetary.model.UserDetails;
+
+public interface UserInterface {
+
+	public UserDetails addUser(String name, String userId, String password, int phone, String email);
+
+	public ArrayList<UserDetails> displayUser();
+
+}
+
+
+user implementation
+
+package com.deloitte.limetray.services;
+
+import java.util.ArrayList;
+import java.util.List;
+import com.deloitte.limetary.model.UserDetails;
+import com.deloitte.limetray.dao.UserDAO;
+
+public  class UserImpl implements UserInterface {
+
+	List<UserDetails> userlist = new ArrayList<UserDetails>();
+	ArrayList<UserDetails> user = new ArrayList<UserDetails>();
+
+	@Override
+	public UserDetails addUser(String name, String userId, String password, int phone, String email) {
+		// TODO Auto-generated method stub
+
+		UserDetails user = new UserDetails();
+		user.setUserId(userId);
+		user.setName(name);
+		user.setPassword(password);
+		user.setPhone(phone);
+		user.setEmail(email);
+
+		UserDAO.addUser(user);
+		return user;
+	}
+
+	@Override
+	public ArrayList<UserDetails> displayUser() {
+		// TODO Auto-generated method stub
+		return UserDAO.displayUser();
+		
+	}
+
+}
+
+
+user dao
+package com.deloitte.limetray.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import com.deloitte.limetary.model.UserDetails;
+
+public class UserDAO {
+	public static Connection connectToDB() {
+		Connection connection = null;
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "admin");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+
+	}
+
+	public static void addUser(UserDetails user) {
+		try {
+
+			Connection con = connectToDB();
+			PreparedStatement stmt = con.prepareStatement("insert into signup values(?,?,?,?,?)");
+			stmt.setString(1, user.getName());
+			stmt.setString(2, user.getUserId());
+			stmt.setString(3, user.getPassword());
+			stmt.setInt(4, user.getPhone());
+			stmt.setString(5, user.getEmail());
+
+			// Step 4: Execute SQL Query
+			int affectedRows = stmt.executeUpdate();
+			System.out.println("Affected rows " + affectedRows);
+
+			// Step 5:Close Connection
+			con.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public static ArrayList<UserDetails> displayUser() {
+		ArrayList<UserDetails> userList = new ArrayList<UserDetails>();
+		try {
+			Connection con = connectToDB();
+			PreparedStatement stmt = con.prepareStatement("select *from signup");
+
+			// Step 4: Execute SQL Query
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				UserDetails user = new UserDetails();
+
+				user.setName(rs.getString(1));
+				user.setUserId(rs.getString(2));
+				user.setPassword(rs.getString(3));
+				user.setPhone(rs.getInt(4));
+				user.setEmail(rs.getString(5));
+				userList.add(user);
+			}
+			// Step 5:Close Connection
+			con.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return userList;
+
+	}
+
+}
