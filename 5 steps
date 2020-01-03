@@ -1,10 +1,207 @@
+1.LIBRARY DEMO
+
+package com.deloitte.library.main;
+
+import java.util.*;
+
+import com.deloitte.library.model.Books;
+import com.deloitte.library.services.BookServiceImpl;
+
+public class LibraryDemo {
+
+	public static void main(String arg[]) {
+		Scanner sc = new Scanner(System.in);
+		String option;
+		//Books book = new Books();
+		BookServiceImpl booksImpl = new BookServiceImpl();
+		List<Books> booklist=new ArrayList<Books>();
+		
+		while (true) {
+			System.out.println("1. ADD BOOK " + "\n 2.DISPLAY BOOK" + "\n 3.SEARCH BOOK"+ "\n 4.EXIT");
+			option = sc.next();
+			//System.out.println("Enter no:of books");
+			//int num = sc.nextInt();
+			switch (option) {
+			case "1":
+				
+			
+				// for (int i = 0; i < num; i++) {
+				System.out.println("Enter book name");
+				String bookName = sc.next();
+
+				System.out.println("Enter book price");
+				String bookPrice = sc.next();
+
+				System.out.println("Enter book author");
+				String bookAuthor = sc.next();
+				 
+			
+			//booklist.add(booksImpl.addBooks(bookName, bookPrice, bookAuthor));
+			booksImpl.addBooks(bookName, bookPrice, bookAuthor);
+				
+			//}
+				break;
+
+			case "2": 
+				booklist=booksImpl.displayBooks();
+				for(Books book:booklist)
+					System.out.println(book);
+			break;
+			
+			case "4":System.exit(0);
+			break;
+
+			}
+
+		}
+
+	}
+
+}
+
+
+
+
+2.BOOKS
+
+package com.deloitte.library.model;
+
+public class Books {
+
+	private int bookId;
+	private String bookName;
+	private double bookPrice;
+	private String bookAuthor;
+	
+	@Override
+	public String toString() {
+		return "Books [bookId=" + bookId + ", bookName=" + bookName + ", bookPrice=" + bookPrice + ", bookAuthor="
+				+ bookAuthor + "]";
+	}
+	private static int counter=1001;
+	
+	public Books()
+	{
+		counter++;
+	}
+	
+	public static int getCounter() {
+		return counter;
+	}
+
+	public static void setCounter(int counter) {
+		Books.counter = counter;
+	}
+
+	public int getBookId() {
+		return bookId;
+	}
+	public void setBookId(int bookId) {
+		this.bookId = bookId;
+	}
+	public String getBookName() {
+		return bookName;
+	}
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
+	}
+	public double getBookPrice() {
+		return bookPrice;
+	}
+	public void setBookPrice(double bookPrice) {
+		this.bookPrice = bookPrice;
+	}
+	public String getBookAuthor() {
+		return bookAuthor;
+	}
+	public void setBookAuthor(String bookAuthor) {
+		this.bookAuthor = bookAuthor;
+	}
+}
+
+
+3.BOOKSERVICEiMPL
+
+package com.deloitte.library.services;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.deloitte.library.dao.BooksDAO;
+import com.deloitte.library.model.Books;
+
+public class BookServiceImpl implements BooksInterfaceServices {
+
+	// BookImpl b=new BookImpl();
+	//ArrayList<Books> book = new Books();
+	List<Books> booklist=new ArrayList<Books>();
+	ArrayList<Books> book = new ArrayList<Books>();
+	@Override
+	public Books addBooks(String bookName, String bookPrice, String authorName) {
+		Books book = new Books();
+		// int bookId=id;
+		// book.set
+		book.setBookId(Books.getCounter());
+		// String bookName=name;
+		book.setBookName(bookName);
+		// String bookPrice=price;
+		book.setBookPrice(Double.parseDouble(bookPrice));
+		// String bookAuthor=author;
+		book.setBookAuthor(authorName);
+
+		// return book;
+		BooksDAO.addBook(book); // no need of object...since it is static method
+		return book;
+
+	}
+
+	public ArrayList<Books> displayBooks() {
+		
+		
+		return BooksDAO.displayBooks(); 
+		//return book;
+		
+
+	}
+
+	@Override
+	public ArrayList<Books> displayBooks(int id, String name, double price, String author) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
+
+
+4.BooksInterfaceServices
+
+package com.deloitte.library.services;
+
+import java.awt.List;
+import java.util.ArrayList;
+
+import com.deloitte.library.model.Books;
+
+public interface BooksInterfaceServices {
+	
+	public Books addBooks(String bookName,String bookPrice,String authorName);
+	public ArrayList<Books> displayBooks(int id,String name,double price,String author);
+
+}
+
+
+5.BOOKS DAO
+
 package com.deloitte.library.dao;
 
+import java.awt.List;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import com.deloitte.library.model.Books;
 
@@ -55,6 +252,41 @@ public class BooksDAO {
 			e.printStackTrace();
 		}
 
+	}
+	
+	
+	
+	public static ArrayList<Books> displayBooks()
+	{
+		ArrayList<Books> bookList=new ArrayList<Books>();
+		try {
+			
+			// Statement stmt = connectToDB().createStatement();
+			Connection con=connectToDB();
+			PreparedStatement stmt = con.prepareStatement("select *from books");
+			
+			// Step 4: Execute SQL Query
+			ResultSet rs=stmt.executeQuery();
+			while(rs.next())
+			{
+				Books book=new Books();
+				book.setBookId(rs.getInt(1));
+				book.setBookName(rs.getString(2));
+				book.setBookAuthor(rs.getString(3));
+				book.setBookPrice(rs.getDouble(4));
+				bookList.add(book);
+			}
+			//Step 5:Close Connection
+			con.close();
+			
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return bookList;
+		
 	}
 
 }
