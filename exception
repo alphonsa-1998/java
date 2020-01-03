@@ -1,0 +1,39 @@
+1. BOOKNAMEEXCEPTION
+
+package com.deloitte.library.exceptions;
+
+public class BookNameException extends Exception {
+
+	public String detailMessage;
+	
+	public BookNameException(String message)
+	{
+		this.detailMessage=message;
+	}
+	
+	
+	
+	public String getMessage()
+	{
+		return detailMessage;
+	}
+}
+
+
+2.UTILITIES
+
+package com.deloitte.library.utilities;
+
+import com.deloitte.library.exceptions.BookNameException;
+
+public class Utilities {
+
+	public static void nameValidation(String bookName) throws BookNameException {
+		String pattern = "^[A-Za-z]+$";
+		if (!bookName.matches(pattern)) {
+			throw new BookNameException("Name can only have alphabets"); 
+			
+		}
+	}
+
+}
