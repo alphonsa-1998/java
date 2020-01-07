@@ -1,0 +1,327 @@
+LOGIN.JSP
+
+<html>
+<head>
+</head>
+<body>
+<form action="/logincheck">
+<center>
+USER NAME:<input type="text" name="uname" placeholder="enter username"/><br/><br/>
+PASSWORD:<input type="password" name="pwd" placeholder="enter password"/><br/><br/>
+<input type="submit" value="login"/>
+</center>
+</form>
+${test} 
+</body>
+</html>
+
+***************************
+
+WELCOME.JSP
+
+<html>
+<head>
+</head>
+<body>
+<h3>WELCOME</h3>
+</body>
+</html>
+
+*********************************
+
+ADMINLOCATION.JSP
+
+<html>
+<head></head>
+<body>
+	<form onsubmit="return finalvalidation()">
+		<h1 style="text-align: center">Location Details</h1>
+		<table align="center" cellspacing="15">
+			<div id="algn" align="center">
+				<tr align="center">
+					<td><b>From:<select id="from">
+								<option value="">Select...</option>
+								<option value="bglr" class="fromlocation">BANGLORE</option>
+								<option value="cmbtre" class="fromlocation">COIMBATORE</option>
+								<option value="kochi" class="fromlocation">KOCHI</option>
+						</select>
+					</b> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <b>TIME :</b><input
+						type="time" class="d-sub" required /></td>
+				</tr>
+
+				<tr>
+					<td><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;To:<select
+							id="to">
+								<option value="">Select...</option>
+								<option value="bglr" class="tolocation">BANGLORE</option>
+								<option value="cmbtre" class="tolocation">COIMBATORE</option>
+								<option value="kochi" class="tolocation">KOCHI</option>
+						</select>
+					</b> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; <!--<span id="err1"></span></b>-->
+						<b>TIME :</b><input type="time" class="d-sub" required /></td>
+				</tr>
+
+				<tr>
+					<td><label for="locid">ENTER LOCATION ID</label> <input
+						type="text" class="d-sub" name="text6"
+						placeholder="ENTER LOCATION ID" id="txt1" required /></td>
+				</tr>
+
+				<tr>
+					<td><label for="locid">ENTER TRAIN NO:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="text" class="d-sub" name="text6"
+						placeholder="ENTER TRAIN NUMBER" id="txt2" required /></td> &nbsp;
+				</tr>
+
+				<tr>
+					<td><label for="locid">ENTER STOP 1:</label> <input
+						type="text" class="d-sub" name="text3" placeholder="ENTER STOP 1"
+						id="txt3" oninput="funvalidation2()" required /> &nbsp; &nbsp;
+						&nbsp; <span id="errormessage2"
+						style="color: red; font-weight: bold;"> </span> <b>TIME :</b><input
+						type="time" class="d-sub" required /></td>
+				</tr>
+
+				<tr>
+					<td><label for="locid">ENTER STOP 2:</label><input type="text"
+						class="d-sub" name="text4" placeholder="ENTER STOP 2" id="txt4"
+						oninput="funvalidation3()" required /> &nbsp; &nbsp; &nbsp; <span
+						id="errormessage3" style="color: red; font-weight: bold;">
+					</span> <b>TIME :</b><input type="time" class="d-sub" required /></td>
+				</tr>
+
+				<tr>
+					<td><label for="locid">ENTER STOP 3:</label><input type="text"
+						class="d-sub" name="text5" placeholder="ENTER STOP 3" id="txt5"
+						oninput="funvalidation4()" required /> &nbsp; &nbsp; &nbsp; <span
+						id="errormessage4" style="color: red; font-weight: bold;">
+					</span> <b>TIME :</b><input type="time" class="d-sub" required></td>
+				</tr>
+
+				<tr align="center">
+					<td><input type="submit" class="d-sub" value="ADD LOCATION"
+						style="font-size: 20; color: black;" onsubmit="finalvalidation()" />
+						<br /> <span id="err"></span></td>
+
+				</tr>
+			</div>
+		</table>
+
+		<script>
+			function funvalidation() {
+				var userval = document.getElementById("txt1").value;
+				var namePattern = "^[A-Za-z]+$";
+				if (!userval.match(namePattern)) {
+					document.getElementById("errormessage").innerHTML = "(Invalid input)";
+				} else {
+					document.getElementById("errormessage").innerHTML = "";
+				}
+			}
+			function funvalidation1() {
+				var userval = document.getElementById("txt2").value;
+				var namePattern = "^[A-Za-z0-9]+$";
+				if (!userval.match(namePattern)) {
+					document.getElementById("errormessage1").innerHTML = "(Invalid input)";
+				} else {
+					document.getElementById("errormessage1").innerHTML = "";
+				}
+			}
+			function funvalidation2() {
+				var userval = document.getElementById("txt3").value;
+				var namePattern = "^[A-Za-z]+$";
+				if (!userval.match(namePattern)) {
+					document.getElementById("errormessage2").innerHTML = "(Invalid input)";
+				} else {
+					document.getElementById("errormessage2").innerHTML = "";
+				}
+			}
+			function funvalidation3() {
+				var userval = document.getElementById("txt4").value;
+				var namePattern = "^[A-Za-z]+$";
+				if (!userval.match(namePattern)) {
+					document.getElementById("errormessage3").innerHTML = "(Invalid input)";
+				} else {
+					document.getElementById("errormessage3").innerHTML = "";
+				}
+			}
+			function funvalidation4() {
+				var userval = document.getElementById("txt5").value;
+				var namePattern = "^[A-Za-z]+$";
+				if (!userval.match(namePattern)) {
+					document.getElementById("errormessage4").innerHTML = "(Invalid input)";
+				} else {
+					document.getElementById("errormessage4").innerHTML = "";
+				}
+			}
+			function finalvalidation() {
+
+				var x = funvalidation();
+				var y = funvalidation1();
+				var z = funvalidation2();
+				var h = funvalidation3();
+				var r = funvalidation4();
+				if (x && y && z && h && r)
+					return true;
+				else
+					return false;
+
+			}
+		</script>
+	</form>
+</body>
+</html>
+
+*******************************************************************************************************
+
+LIMETRAYCONTROLLER.JAVA
+
+package com.deloitte.demo.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+//import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.deloitte.demo.model.Location;
+import com.deloitte.demo.services.LocationServices;
+
+@Controller
+@ResponseBody
+public class LimeTrayController {
+
+	@Autowired
+	LocationServices service;
+
+	@GetMapping("/msg")
+	public ModelAndView myMethod() {
+		ModelAndView modelandview = new ModelAndView();
+		modelandview.setViewName("index");
+		// modelandview.addObject("abc", service.g);
+
+		return modelandview;
+	}
+
+	@GetMapping("/form")
+	public ModelAndView username() {
+		ModelAndView login = new ModelAndView();
+		login.setViewName("login");
+		// modelandview.addObject("abc", service.g);
+
+		return login;
+	}
+
+	@GetMapping("/logincheck")
+	public ModelAndView login(@RequestParam("uname") String uname, @RequestParam("pwd") String pwd) {
+
+		System.out.println("name =" + uname);
+		System.out.println("password =" + pwd);
+
+		ModelAndView check = new ModelAndView();
+		if (service.validate(uname, pwd)) {
+			ModelAndView login = new ModelAndView();
+			login.setViewName("welcome");
+			// login.addObject(uname, uname);
+			// modelandview.addObject("abc", service.g);
+			return login;
+		} else {
+			check.setViewName("login");
+			return check.addObject("test", service.validation(uname, pwd));
+		}
+	}
+
+	@PostMapping("/addloc")
+
+	public void addUser(@RequestBody Location loc) {
+		// return service.getMessage();
+
+		service.add(loc);
+	}
+
+	@RequestMapping("/display")
+	public String getUser() {
+		return "user details will be displayed";
+	}
+
+	@GetMapping("/adminlocation")
+	public ModelAndView location() {
+		ModelAndView loc = new ModelAndView();
+		loc.setViewName("AdminLocation");
+		return loc;
+	}
+
+	/*
+	 * @GetMapping("/locvalid") public ModelAndView locvalid() { ModelAndView lValid
+	 * = new ModelAndView(); lValid.setViewName("AdminLocation"); //
+	 * modelandview.addObject("abc", service.g);
+	 * 
+	 * return lValid; }
+	 */
+
+}
+
+*************************************************************************************
+
+LOCATIONSERVICE.JAVA
+
+package com.deloitte.demo.services;
+
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.deloitte.demo.dao.LocationDAO;
+import com.deloitte.demo.model.Location;
+//import com.example.demo.dao.LibraryDAO;
+
+
+@Service
+
+public class LocationServices {
+
+	@Autowired
+	LocationDAO dao;
+
+
+	public void add(Location loc) {
+		dao.addUser(loc);
+	}
+	
+	public String validation(String uname,String password)
+	{
+				
+		if(uname.equals("admin")&&password.equals("admin123"))
+			return "LOGIN SUCCESSFUL";
+		else
+			return "INVALID USER";
+	}
+	
+	
+	public boolean validate(String uname,String password)
+	{
+				
+		if(uname.equals("admin")&&password.equals("admin123"))
+			return true;
+		else
+			return false;
+	}
+	
+	
+}
+********************************************************************************
+
+APPLICATION.PROPERTIES
+
+server.port=8080
+
+
+spring.mvc.view.prefix= /WEB-INF/jsp/
+spring.mvc.view.suffix=.jsp
+
+****************************************************
