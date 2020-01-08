@@ -1,552 +1,144 @@
-1.SAMPLE JAVA PRG:
-package deloitte;
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>LOCATION DETAILS</title>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/sss.css">
+<link rel="stylesheet" href="images/back2.jpg">
 
-public class HelloWorld {
-	
-	
-	public static void main(String args[])
-	{
-       
-		System.out.println("ADDITION = "+add(2,3));
-		System.out.println("SUBTRACTION ="+sub(5,2));
-		System.out.println("MULTIPLICATION ="+mul(2,3));
-	}
-	
-	
-	public static int add(int x, int y)
-	 {
-		 return x+y;
-	 }
-	 
-	public static int sub(int x, int y)
-	 {
-		 return x-y;
-	 }
-	
-	public static int mul(int x, int y)
-	 {
-		 return x*y;
-	 }
+<style>
+.imgAlign{
+margin-top:50px;
+margin-left:200px;
+margin-right:200px;
 }
-
-
-2.EMPLOYEE
-package deloitte;
-
-public class employee {
-	private int empId;
-	private String empName;
-	private double salary;
-	private String deptId;
-
-	// default constructor
-	employee() {
-
-	}
-
-	// parameterized constructor in java
-	employee(int empId, String empName, double salary, String deptId) {
-		this.empId = empId;
-		this.empName = empName;
-		this.salary = salary;
-		this.deptId = deptId;
-	}
-
-	public int getEmpId() {
-		return empId;
-	}
-
-	public void setEmpId(int empId) {
-		this.empId = empId;
-	}
-
-	public String getEmpName() {
-		return empName;
-	}
-
-	public void setEmpName(String empName) {
-		String pattern = "^[a-zA-Z]+$";
-		if (empName.matches(pattern))
-			this.empName = empName;
-		else
-			System.out.println("Please enter name in alphabets");
-	}
-
-	public static boolean nameValidation(String name) {
-		String pattern = "^[a-zA-Z]+$";
-		if (name.matches(pattern))
-			// this.empName = empName;
-			return true;
-		else {
-			System.out.println("Please enter name in alphabets");
-			return false;
-		}
-
-	}
-
-	public double getSalary() {
-		return salary;
-	}
-
-	public void setSalary(double salary) {
-		this.salary = salary;
-	}
-
-	public String getDeptId() {
-		return deptId;
-	}
-
-	public void setDeptId(String deptId) {
-		this.deptId = deptId;
-	}
-
-	public void deptChange(String deptName) {
-		System.out.println("inside dept change method");
-	}
-
-	public double salaryIncrement(double amount) {
-		System.out.println("inside increment method");
-		return 10.10;
-	}
-
+body{background:linear-gradient(to bottom, rgba(0, 0, 0,0.9), rgba(0, 0, 0,0.6), rgba(0, 0, 0,0.7), rgba(0,0,0,1)), url(back2.jpg)no-repeat; width:100%;background-size:cover;color:white;font-family:sans-serif;}
 }
+.imgAlign1{align:center;}
+</style>
+
+</head>
+<body>
+<form name="location" onsubmit="return submitform()">
+<div align="center">
+<h1><b>LimeTray</b></h1>
+<h4><b>Food Delivery App</b></h4><br/><br/><br/>
+<h2 style="font-family:seriff; font-size:25"><b>Delivery Location</b></h2><br/>
+
+<b>From:<select id="from">
+						<option value="" >Select...</option>
+						<option value="bglr" class="fromlocation">BANGLORE</option>
+						<option value="cmbtre" class="fromlocation">COIMBATORE</option>
+						<option value="kochi" class="fromlocation">KOCHI</option>
+						</select>
+						<!--<span id="err1"></span>-->
+						</b>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+
+<b>To:<select id="to">
+						<option value="" >Select...</option>
+						<option value="bglr" class="tolocation">BANGLORE</option>
+						<option value="cmbtre" class="tolocation">COIMBATORE</option>
+						<option value="kochi" class="tolocation">KOCHI</option>
+						</select>
+						 </b> </br>
 
 
-2.1:employee demo
-package deloitte;
+<span id="err"></span><br/>
+<input type="submit" value="SEARCH" name="btn" onclick="return submitform()"/>
 
-import java.util.Scanner;
+<div class="row">
+<div class="col-xs-12">
+<div align="center" class="imgAlign1">
 
-public class Employeedemo {
 
-	public static void main(String args[]) {
-		
-		Scanner sc=new Scanner(System.in);
-		System.out.println("Please enter name");
-		String name=sc.next();
-		
-		System.out.println("Please enter salary");
-		String salary=sc.next();
-		
-		boolean nameFlag=validation.nameValidation(name);
-		boolean salaryFlag=validation.salaryValidation(salary);
 
-		
-		if(nameFlag && salaryFlag)
-		{
-		employee emp1 = new employee();// calling default constructor
-		emp1.setDeptId("Associate Analyst");
-		emp1.setEmpId(101);
-		emp1.setEmpName("abc");
-		emp1.setSalary(25000);
-		System.out.println(emp1.getSalary());
-		}
 
-		//employee emp2 = new employee(102, "abc", 25000, "CS");// calling parameterized constructor
-		//System.out.println(emp2.getEmpId());
-		
 
-		
-	}
+
+</div>
+</div>
+</div>
+
+<div align="center" class="imgAlign">
+<table border="1" cellpadding="10" >
+<c:forEach items="${user}" var="item">
+<tr colspan="10">
+<th>TRAIN NO: <c:out value="${item.getTrainNo()}"></c:out></th>
+</tr>
+<tr>
+<th>From: <c:out value="${item.getFrom()}"></c:out></th>
+<th></th>
+<th>To: <c:out value="${item.getTo()}"></c:out></th>
+</tr>
+<tr>
+<th>TIMING</th>
+<th>STOPS</th>
+<th>RESTAURANTS</th>
+</tr>
+<tr>
+<td><c:out value="${item.getFromTime()}"></c:out></td>
+<td><c:out value="${item.getFrom()}"></c:out></td>
+</tr>
+<tr>
+<td><c:out value="${item.getTime1()}"></c:out></td>
+<td><c:out value="${item.getStop1()}"></c:out></td>
+</tr>
+<tr>
+<td><c:out value="${item.getTime2()}"></c:out></td>
+<td><c:out value="${item.getStop2()}"></c:out></td>
+</tr>
+<tr>
+<td><c:out value="${item.getTime3()}"></c:out></td>
+<td><c:out value="${item.getStop3()}"></c:out></td>
+</tr>
+<tr>
+<td><c:out value="${item.getToTime()}"></c:out></td>
+<td><c:out value="${item.getTo()}"></c:out></td>
+</tr>
+
+
+
+
+
+
+</tr>
+</c:forEach>
+
+</table>
+</div>
+</center>
+</form>
+<script>
+
+function dropdownValidation1() {
+var to = document.getElementById("to");
+var from = document.getElementById("from");
+
+if (to.options[to.selectedIndex].value ==   from.options[from.selectedIndex].value) {
+
+document.getElementById("err").innerHTML="Make sure 'From location' and 'To location' are not same."
+} else {
+document.getElementById("err").innerHTML="";
+}
 
 }
 
-3.VALIDATION
-package deloitte;
+function submitform(){
 
-public class validation {
-	public static boolean nameValidation(String name) {
-		String pattern = "^[a-zA-Z]+$";
-		if (name.matches(pattern))
-			// this.empName = empName;
-			return true;
-		else {
-			System.out.println("Please enter name in alphabets");
-			return false;
-		}
+var y=dropdownValidation1();
 
-	}
-
-	public static boolean salaryValidation(String salary) {
-		String pattern = "^[0-9]+$";
-		if (salary.matches(pattern))
-			// this.empName = empName;
-			return true;
-		else {
-			System.out.println("Please enter salary in digits");
-			return false;
-		}
-
-	}
-
-}
-
-4.CLASSROOM
-package deloitte;
-
-public class Classroom {
-
-	private String classroomName;
-	private int numberOfsystems;
-	private boolean projector;
-	private boolean ac;
-	// int students;
-	private String facultyName;
-	private boolean occupied;
-
-//	private  boolean facultyAvailability;
-	@Override
-	public String toString() {
-		return "Classroom [classroomName=" + classroomName + ", numberOfsystems=" + numberOfsystems + ", projector="
-				+ projector + ", ac=" + ac + ", facultyName=" + facultyName + ", occupied=" + occupied
-				+ ", classroomId=" + classroomId + "]";
-	}
-
-	private int classroomId;
-
-	// deafult constructor
-	Classroom() {
-
-	}
-
-	public int getClassroomId() {
-		return classroomId;
-	}
-
-	public void setClassroomId(int classroomId) {
-		this.classroomId = classroomId;
-	}
-
-	public String getClassroomName() {
-		return classroomName;
-	}
-
-	public void setClassroomName(String classroomName) {
-		this.classroomName = classroomName;
-	}
-
-	public int getNumberOfsystems() {
-		return numberOfsystems;
-	}
-
-	public void setNumberOfsystems(int numberOfsystems) {
-		this.numberOfsystems = numberOfsystems;
-	}
-
-	public boolean isProjector() {
-		return projector;
-	}
-
-	public void setProjector(boolean projector) {
-		this.projector = projector;
-	}
-
-	public boolean isAc() {
-		return ac;
-	}
-
-	public void setAc(boolean ac) {
-		this.ac = ac;
-	}
-
-	public String getFacultyName() {
-		return facultyName;
-	}
-
-	public void setFacultyName(String facultyName) {
-		this.facultyName = facultyName;
-	}
-
-	public boolean isOccupied() {
-		return occupied;
-	}
-
-	public void setOccupied(boolean occupied) {
-		this.occupied = occupied;
-	}
-
-	/*public boolean isFacultyAvailability() {
-		return facultyAvailability;
-	}
-
-	public void setFacultyAvailability(boolean facultyAvailability) {
-		this.facultyAvailability = facultyAvailability;
-	}*/
-
-}
-
-4.1
-package deloitte;
-
-import java.util.*;
-//import CommonUtilities;
-
-public class ClassroomDemo {
-
-	public static void main(String args[]) {
-
-		Scanner sc = new Scanner(System.in);
-		// Classroom[] room = null;
-		ArrayList<Classroom> list = new ArrayList<Classroom>();
-		// list.add("ab");
-		// list.add(10);
-		String noOfRooms = null;
-		int counter = 0;
-		while (true) {
-			System.out.println(
-					"1.Add new room" + "2.Search room" + "3.Display all room" + "4.Allocate the room" + "6. Login"+"5.exit");
-
-			String option = sc.next();
-			RoomImpl mainClassObj = new RoomImpl();
-
-			String uname;
-			Object pswd;
-			switch (option) {
-
-			case "1":String id="";
-				while(true)
-				{
-				System.out.println("enter id");
-				id = sc.next();
-				if(CommonUtilities.numberValidation(id))
-					break;
-				else
-					continue;
-				}
-				System.out.println("enter classroom name");
-				String name = sc.next();
-				System.out.println("enter no:of systems");
-				String systems = sc.next();
-				System.out.println("is projector needed");
-				String projector = sc.next();
-				System.out.println("is AC needed");
-				String ac = sc.next();
-				/*
-				 * System.out.println("enter faculty name"); String faculty = sc.next();
-				 */
-
-				/*
-				 * Classroom c = new Classroom(); c.setClassroomId(Integer.parseInt(id));
-				 * c.setClassroomName(name); c.setNumberOfsystems(Integer.parseInt(systems));
-				 * c.setProjector(true); c.setAc(true);
-				 */
-				// c.setFacultyName(faculty);
-				// c.setOccupied(false);
-				// c.setFacultyAvailability(true);
-
-				list.add(mainClassObj.addRoom(id, name, systems, projector));
-				
-				break;
-
-			case "2":
-				System.out.println("enter the class id to search");
-				String cls = sc.next();
-
-				ArrayList<Classroom> rooms = null;
-				mainClassObj.searchRoom(Integer.parseInt(cls), rooms);
-				break;
-			case "3":
-				for (Classroom c : list) {
-					System.out.println(c);
-				}
-				//int d = Classroom.getCounter();
-				//System.out.println("No:of objects:" + d);
-
-				break;
-
-			case "4":
-				System.out.println("enter the minimum no:of systems required");
-				int n = sc.nextInt();
-
-			ArrayList<Classroom> availableRooms =mainClassObj.allocatRoom(n, list);
-			if(availableRooms.size()>=Integer.parseInt(noOfRooms))
-			{
-				for (Classroom c : availableRooms) {
-					for(Classroom clsroom:list)
-					{
-						if(c.getClassroomId()==n)
-						{
-					System.out.println("enter the name of faculty required");
-					String nameFac = sc.next();
-					clsroom.setFacultyName(nameFac);
-
-					clsroom.setOccupied(false);
-						}
-				}
-			}
-			}else
-				System.out.println("We do not have enough rooms");
-			//counter++;
-			/*if (counter >= Integer.parseInt(noOfRooms)) {
-				break;
-			}*/
-
-			//break;
-			
-			
-			
-			case "6"://Classroom clsroom=new Classroom();
-					System.out.println("Enter the username");
-					String user=sc.next();
-					//clsroom.setUname(uname);
-					System.out.println("Enter the password");
-					//clsroom.setPswd(pswd);
-					String password=sc.next();
-					//clsroom.validateUser(user,password);
-					//mainClassObj.validateUser(user,password);
-					boolean validateUserFlag=mainClassObj.validateUser(user,password);
-					if(validateUserFlag)
-						System.out.println("Login Successful");
-					else
-						System.out.println("Invalid Login");
-					 break;
-						
-			
-			
-			
-			
-
-			case "5": System.exit(0);
-
-			// System.out.println(c);
-		}
-	}
-
-}
-}
-
-5.VALIDATION ROOMID
-package deloitte;
-
-public class CommonUtilities {
-
-	public boolean stringValidation(String name) {
-		String pattern = "^[a-zA-Z]+$";
-		if (name.matches(pattern))
-			// this.empName = empName;
-			return true;
-		else {
-			System.out.println("Please enter name in alphabets");
-			return false;
-		}
-
-	}
-
-	public static boolean numberValidation(String number) {
-		String pattern = "^[0-9]+$";
-		if (number.matches(pattern))
-			// this.empName = empName;
-			return true;
-		else {
-			System.out.println("Please enter room number in digits");
-			return false;
-		}
-
-	}
-
-}
-
-6.INTERFACE ROOM
-package deloitte;
-
-import java.util.*;
-
-public interface Room {
-
-	public Classroom addRoom(String ClassroomId, String ClassroomName, String NumberOfsystems, String Projector);
-
-	public Classroom searchRoom(int roomId, ArrayList<Classroom> rooms);
-
-	public ArrayList<Classroom> allocatRoom(int noOfSystems, ArrayList<Classroom> rooms);
-
-	public Classroom displayRoom();
-
-	Classroom allocatRoom(int noOfSystems, Classroom[] rooms);
-	
-	public boolean validateUser(String uname,String pswd);
+if(y)
+return true;
+else
+return false;
 }
 
 
-7.ROOM IMPLEMENTATION
-package deloitte;
-
-import java.util.*;
-
-public class RoomImpl implements Room {
-
-	int classroomId;
-	Scanner sc = new Scanner(System.in);
-	Classroom[] room = null;
-
-	@Override
-	public Classroom addRoom(String ClassroomId, String ClassroomName, String NumberOfsystems, String Projector) {
-		// TODO Auto-generated method stub
-		Classroom cls = new Classroom();
-		String id = ClassroomId;
-		cls.setClassroomId(Integer.parseInt(id));
-		String name = ClassroomName;
-		cls.setClassroomName(name);
-		String systems = NumberOfsystems;
-		cls.setNumberOfsystems(Integer.parseInt(systems));
-		cls.setProjector(true);
-		return cls;
-
-	}
-
-	@Override
-	public Classroom searchRoom(int roomId, ArrayList<Classroom> list) {
-
-		for (Classroom c : list) {
-			if (c.getClassroomId() == roomId) {
-				// System.out.println(c);
-				return c;
-			}
-		}
-
-		return null;
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public Classroom allocatRoom(int noOfSystems, Classroom[] rooms) {
-		// TODO Auto-generated method stub
-		Classroom[] availableRooms = new Classroom[10];
-		int i = 0;
-
-		for (Classroom c : rooms) {
-			if (c.getNumberOfsystems() >= noOfSystems && c.isOccupied()) {
-				availableRooms[i] = c;
-				i++;
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public Classroom displayRoom() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<Classroom> allocatRoom(int noOfSystems, ArrayList<Classroom> rooms) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean validateUser(String uname,String pswd) {
-		
-		if(uname.equals("admin")&&pswd.equals("admin"))
-			return true;
-		
-		else
-		return false;
-	}
-	
-	
-	
-	
-}
-
+</script>
+</body>
+</html>
