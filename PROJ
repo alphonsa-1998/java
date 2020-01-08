@@ -1,0 +1,447 @@
+USERCONTROLLER
+package com.deloitte.demo.controller;
+
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+
+//import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.deloitte.demo.model.Location;
+import com.deloitte.demo.services.LocationServices;
+
+
+@Controller
+@ResponseBody
+public class LimeTrayController {
+
+	@Autowired
+	LocationServices service;
+
+	
+	
+	@GetMapping("/locationdetails")
+	public ModelAndView myMethod() {
+		ModelAndView modelandview = new ModelAndView();
+		modelandview.setViewName("timetable2");
+
+		return modelandview.addObject("user", service.display());
+	}
+	
+	
+	
+	/*@PostMapping("/locationdetails")
+	public ModelAndView myMethod(@RequestBody Location user) {
+		ModelAndView modelandview = new ModelAndView();
+		modelandview.setViewName("timetable");
+
+		return modelandview.addObject("user", service.display(user));
+	}*/
+	
+	@PostMapping("/a")
+	public String getmap() {
+		return "hello";
+	}
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ * @GetMapping("/msg") public ModelAndView myMethod() { ModelAndView
+ * modelandview = new ModelAndView(); modelandview.setViewName("index"); //
+ * modelandview.addObject("abc", service.g);
+ * 
+ * return modelandview; }
+ * 
+ * @GetMapping("/form") public ModelAndView username() { ModelAndView login =
+ * new ModelAndView(); login.setViewName("login"); //
+ * modelandview.addObject("abc", service.g);
+ * 
+ * return login; }
+ * 
+ * @GetMapping("/logincheck") public ModelAndView login(@RequestParam("uname")
+ * String uname, @RequestParam("pwd") String pwd) {
+ * 
+ * System.out.println("name =" + uname); System.out.println("password =" + pwd);
+ * 
+ * ModelAndView check = new ModelAndView(); if (service.validate(uname, pwd)) {
+ * ModelAndView login = new ModelAndView(); login.setViewName("welcome"); //
+ * login.addObject(uname, uname); // modelandview.addObject("abc", service.g);
+ * return login; } else { check.setViewName("login"); return
+ * check.addObject("test", service.validation(uname, pwd)); } }
+ * 
+ * @PostMapping("/addloc")
+ * 
+ * public void addUser(@RequestBody Location loc) { // return
+ * service.getMessage();
+ * 
+ * service.add(loc); }
+ * 
+ * 
+ * 
+ * 
+ * /* @PostMapping("/loccheck") public ModelAndView login(Location loc) {
+ * //@RequestBody
+ * 
+ * ModelAndView check = new ModelAndView();
+ * 
+ * if (service.validate(routeId,from,to,fromTime,toTime,stop1,stop2,stop3,time1,
+ * time2,time3,trainNo)) {
+ * 
+ * login.setViewName("welcome"); // login.addObject(uname, uname); //
+ * modelandview.addObject("abc", service.g); return login; } else {
+ * check.setViewName("login"); return check.addObject("test",
+ * service.validation(uname, pwd)); } }
+ */
+
+/*
+ * @RequestMapping("/display") public String getUser() { return
+ * "user details will be displayed"; }
+ * 
+ * @GetMapping("/adminlocation") public ModelAndView location() { ModelAndView
+ * loc = new ModelAndView(); loc.setViewName("AdminLocation"); return loc; }
+ */
+
+/*
+ * @GetMapping("/locvalid") public ModelAndView locvalid() { ModelAndView lValid
+ * = new ModelAndView(); lValid.setViewName("AdminLocation"); //
+ * modelandview.addObject("abc", service.g);
+ * 
+ * return lValid; }
+ */
+
+*********************************************************************************************************************
+
+DAO
+
+
+package com.deloitte.demo.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import org.springframework.stereotype.Repository;
+
+import com.deloitte.demo.model.Location;
+
+
+@Repository
+
+public class LocationDAO {
+
+	public static Connection connectToDB() {
+		Connection connection = null;
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "admin");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return connection;
+
+	}
+
+	public ArrayList<Location> displayUser() {
+		ArrayList<Location> userList = new ArrayList<Location>();
+		try {
+			Connection con = connectToDB();
+			PreparedStatement stmt = con.prepareStatement("select * from location");
+			
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Location user = new Location();
+
+				user.setRouteId(rs.getString(1));
+				user.setFrom(rs.getString(2));
+				user.setTo(rs.getString(3));
+				user.setFromTime(rs.getString(4));
+				user.setToTime(rs.getString(5));
+				user.setStop1(rs.getString(6));
+				user.setStop2(rs.getString(7));
+				user.setStop3(rs.getString(8));
+				user.setTime1(rs.getString(9));
+				user.setTime2(rs.getString(10));
+				user.setTime3(rs.getString(11));
+				user.setTrainNo(rs.getString(12));
+				userList.add(user);
+			}
+			// Step 5:Close Connection
+			con.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return userList;
+
+	}
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	 * public void addUser(Location loc) { try {
+	 * 
+	 * Connection con = connectToDB(); PreparedStatement stmt =
+	 * con.prepareStatement("insert into location values(?,?,?,?,?,?,?,?,?,?,?,?)");
+	 * stmt.setString(1, loc.getRouteId()); stmt.setString(2, loc.getFrom());
+	 * stmt.setString(3, loc.getTo()); stmt.setString(4, loc.getFromTime());
+	 * stmt.setString(5, loc.getToTime()); stmt.setString(6, loc.getStop1());
+	 * stmt.setString(7, loc.getStop2()); stmt.setString(8, loc.getStop3());
+	 * stmt.setString(9, loc.getTime1()); stmt.setString(10, loc.getTime2());
+	 * stmt.setString(11, loc.getTime3()); stmt.setString(12, loc.getTrainNo());
+	 * 
+	 * // Step 4: Execute SQL Query int affectedRows = stmt.executeUpdate();
+	 * System.out.println("Affected rows " + affectedRows);
+	 * 
+	 * // Step 5:Close Connection con.close();
+	 * 
+	 * } catch (SQLException e) { // TODO Auto-generated catch block
+	 * e.printStackTrace(); }
+	 * 
+	 * }
+	 */
+
+}
+
+
+*********************************************************************************************************
+
+POJO Class
+
+package com.deloitte.demo.model;
+
+public class Location {
+	String trainNo;	
+	String from;
+	String to;
+	String fromTime;
+	String toTime;
+	String stop1;
+	String stop2;
+	String stop3;
+	String time1;
+	String time2;
+	String time3;
+	String routeId;
+
+	public String getRouteId() {
+		return routeId;
+	}
+
+	public void setRouteId(String routeId) {
+		this.routeId = routeId;
+	}
+
+	public String getFrom() {
+		return from;
+	}
+
+	public void setFrom(String from) {
+		this.from = from;
+	}
+
+	public String getTo() {
+		return to;
+	}
+
+	public void setTo(String to) {
+		this.to = to;
+	}
+
+	public String getFromTime() {
+		return fromTime;
+	}
+
+	public void setFromTime(String fromTime) {
+		this.fromTime = fromTime;
+	}
+
+	public String getToTime() {
+		return toTime;
+	}
+
+	public void setToTime(String toTime) {
+		this.toTime = toTime;
+	}
+
+	public String getStop1() {
+		return stop1;
+	}
+
+	public void setStop1(String stop1) {
+		this.stop1 = stop1;
+	}
+
+	public String getStop2() {
+		return stop2;
+	}
+
+	public void setStop2(String stop2) {
+		this.stop2 = stop2;
+	}
+
+	public String getStop3() {
+		return stop3;
+	}
+
+	public void setStop3(String stop3) {
+		this.stop3 = stop3;
+	}
+
+	public String getTime1() {
+		return time1;
+	}
+
+	public void setTime1(String time1) {
+		this.time1 = time1;
+	}
+
+	public String getTime2() {
+		return time2;
+	}
+
+	public void setTime2(String time2) {
+		this.time2 = time2;
+	}
+
+	public String getTime3() {
+		return time3;
+	}
+
+	public void setTime3(String time3) {
+		this.time3 = time3;
+	}
+
+	public String getTrainNo() {
+		return trainNo;
+	}
+
+	public void setTrainNo(String trainNo) {
+		this.trainNo = trainNo;
+	}
+
+	@Override
+	public String toString() {
+		return "Location [routeId=" + routeId + ", from=" + from + ", to=" + to + ", fromTime=" + fromTime + ", toTime="
+				+ toTime + ", stop1=" + stop1 + ", stop2=" + stop2 + ", stop3=" + stop3 + ", time1=" + time1
+				+ ", time2=" + time2 + ", time3=" + time3 + ", trainNo=" + trainNo + "]";
+	}
+
+}
+
+******************************************************************************************************************************
+
+SERVICES
+
+
+package com.deloitte.demo.services;
+
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.deloitte.demo.dao.LocationDAO;
+import com.deloitte.demo.model.Location;
+//import com.example.demo.dao.LibraryDAO;
+
+
+@Service
+
+public class LocationServices {
+
+	@Autowired
+	LocationDAO dao;
+
+	public ArrayList<Location> display() {
+		return dao.displayUser();
+	}
+
+	
+
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	 * public void add(Location loc) { dao.addUser(loc); }
+	 * 
+	 * public String validation(String uname,String password) {
+	 * 
+	 * if(uname.equals("admin")&&password.equals("admin123")) return
+	 * "LOGIN SUCCESSFUL"; else return "INVALID USER"; }
+	 * 
+	 * 
+	 * public boolean validate(String uname,String password) {
+	 * 
+	 * if(uname.equals("admin")&&password.equals("admin123")) return true; else
+	 * return false; }
+	 */
+
+	/*
+	 * public boolean check(String routeId,String from,String
+	 * to,fromTime,toTime,stop1,stop2,stop3,time1,time2,time3,trainNo) {
+	 * 
+	 * }
+	 */
+
+
+
+***********************************************************************************************************************
